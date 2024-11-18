@@ -12,12 +12,16 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 endif()
 
-add_executable(llvm-serializer main.cpp)
+add_subdirectory(runtime)
+
+add_executable(llvm-serializer src/main.cpp)
 target_link_libraries(llvm-serializer
   LLVMSupport
   LLVMIRReader
   LLVMAsmParser
   LLVMBitReader
   LLVMObject
+  runtime
 )
 
+install(TARGETS llvm-serializer runtime DESTINATION bin)

@@ -43,8 +43,12 @@ void printArgTypeInfo(std::unique_ptr<llvm::Module> &module,
     llvm::raw_string_ostream rso(argTypeName);
     argType->print(rso);
     rso.str();
-    std::cout << "Argument name: " << argName << ", type: " << argTypeName
-              << "\n";
+    errs() << "Argument name: " << argName << ", type: " << argTypeName << "\n";
+    if (argType->isPointerTy()) {
+      // Save data if not null
+    } else {
+      // Save data
+    }
   }
 }
 
@@ -61,9 +65,5 @@ int main(int argc, char **argv, char **envp) {
     errs() << "Failed to parse IR file\n";
     return 1;
   }
-
-  // for (const auto &pair : result) {
-  //   std::cout << "Argument index: " << pair.first << ", Pointer fields: ";
-  // }
   return 0;
 }
